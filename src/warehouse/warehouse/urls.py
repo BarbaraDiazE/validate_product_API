@@ -16,8 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from product.views import validation_view
+from product.views import product_view
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/products', validation_view, name='product validation')
+    path("admin/", admin.site.urls),
+    path("api/products", product_view, name="product validation"),
 ]
