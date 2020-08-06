@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from product.views import product_view
+from product.views import product_view, products_bulk_insert
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/products", product_view, name="product validation"),
+    path("api/products", product_view, name="get products"),
+    path("api/products/bulk_insert", products_bulk_insert, name="product bulk insert"),
 ]

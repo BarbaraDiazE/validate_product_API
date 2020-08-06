@@ -1,4 +1,3 @@
-
 import json
 
 Product = '{ "id":"A_120", "name":"Leche", "value": 10.00, "discount":0.10, "stock":5}'
@@ -36,8 +35,7 @@ def validate_product(object):
     product = json.loads(object)
     error_name = validate_name(product["name"])
     error_value = validate_value(product["value"])
-    error_discount = validate_discount_value(
-        product["discount"], product["value"])
+    error_discount = validate_discount_value(product["discount"], product["value"])
     error_stock = validate_stock(product["stock"])
     error = []
     if error_name:
@@ -51,5 +49,15 @@ def validate_product(object):
     return error
 
 
-error = validate_product(Product)
-print(error)
+# error = validate_product(Product)
+# print(error)
+def validate_fields(products):
+    fields_to_validate = ["id", "name", "value", "discount", "stock"]
+    error_counter = 0
+    for p in products:
+        keys = p.keys()
+        check = all(item in keys for item in fields_to_validate)
+        if check == False:
+            error_counter += 1
+    return error_counter
+

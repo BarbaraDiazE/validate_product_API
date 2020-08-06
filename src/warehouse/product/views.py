@@ -1,7 +1,9 @@
+import json
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Product
+from .validators import validate_fields
 
 
 @csrf_exempt
@@ -20,4 +22,27 @@ def product_view(request):
             ]
         }
         return JsonResponse(result, status=200)
+    return HttpResponse(status=405)
+
+
+@csrf_exempt
+def products_bulk_insert(request):
+    if request.method == "POST":
+        payload = json.loads(request.body)
+        if "products" in payload:
+            products = payload["products"]
+            error_counter = validate_fields(products)
+            print("elements not parseable: ", error_counter)
+            if error_counter == 0:
+                #
+                result = {"status": "OK"}
+                return JsonResponse(result, status=200)
+            error_response = {
+                "status": "ERROR",
+                "products_report": [],
+                "number_of_products_unable_to_parse": error_counter,
+            }
+            return JsonResponse(error_response, status=422)
+
+        return HttpResponse(status=400)
     return HttpResponse(status=405)
