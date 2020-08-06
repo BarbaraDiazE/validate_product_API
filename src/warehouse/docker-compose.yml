@@ -1,0 +1,11 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: "warehouse_db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "2020"
+    ports:
+      - 5433:5432
