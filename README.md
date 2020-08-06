@@ -1,4 +1,11 @@
 ## validate_product_api
+
+### Install dependencies 
+#### Create a virtual env
+#### Install dependencies on requirements.txt
+#### Install docker-compose. for more information, https://docs.docker.com/compose/install/
+#### Activate virtual env
+
 ### To create database, run
 ```
 docker-compose up
