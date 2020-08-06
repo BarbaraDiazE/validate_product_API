@@ -1,0 +1,62 @@
+{
+	"variables": [],
+	"info": {
+		"name": "warehouse",
+		"_postman_id": "4e3142c3-8439-800a-9822-da86027b7392",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get products ok",
+			"request": {
+				"url": "http://127.0.0.1:8000/api/products",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "bulk insert fail",
+			"request": {
+				"url": "http://127.0.0.1:8000/api/products/bulk_insert",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"products\": [\n        {\n            \"id\": \"L_120\",\n            \"name\": \"leche\",\n            \"value\": 19.9,\n            \"discount\": 0.1,\n            \"stock\": 5\n        },\n        {\n            \"id\": \"G_100\",\n            \"name\": \"galletas\",\n            \"value\": 8.00,\n            \"discount\": 0.00\n           \n        },\n        {\n            \"id\": \"P_100\",\n            \"name\": \"pan\",\n            \"value\": 20,\n            \"discount\": 0.00,\n            \"stock\": 1\n           \n        }\n    ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "builk insert ok",
+			"request": {
+				"url": "http://127.0.0.1:8000/api/products/bulk_insert",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"products\": [\n        {\n            \"id\": \"A_120\",\n            \"name\": \"agua\",\n            \"value\": 19.9,\n            \"discount\": 0.1,\n            \"stock\": 5\n        },\n        {\n            \"id\": \"a_100\",\n            \"name\": \"azucar\",\n            \"value\": 8.00,\n            \"discount\": 0.00,\n            \"stock\":22\n           \n        },\n        {\n            \"id\": \"P_100\",\n            \"name\": \"pan\",\n            \"value\": 20.00,\n            \"discount\": 0.00,\n            \"stock\": 1\n           \n        }\n    ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
