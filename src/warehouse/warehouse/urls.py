@@ -19,5 +19,5 @@ from django.urls import path
 from product.views import validation_view
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', validation_view, name='product validation')
+    path('api/products', validation_view, name='product validation')
 ]
