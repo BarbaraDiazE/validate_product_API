@@ -34,6 +34,15 @@ def products_bulk_insert(request):
             error_counter = validate_fields(products)
             products_report = validate_products(products)
             if (error_counter == 0) and (not products_report):
+                for p in products:
+                    record = Product(
+                        id=p["id"],
+                        name=p["name"],
+                        value=p["value"],
+                        discount=p["discount"],
+                        stock=p["stock"],
+                    )
+                    record.save()
                 result = {"status": "OK"}
                 return JsonResponse(result, status=200)
             error_response = {
