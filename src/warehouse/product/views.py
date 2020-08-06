@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Product
-from .validators import validate_fields
+from .validators import validate_fields, validate_products
 
 
 @csrf_exempt
@@ -32,14 +32,13 @@ def products_bulk_insert(request):
         if "products" in payload:
             products = payload["products"]
             error_counter = validate_fields(products)
-            print("elements not parseable: ", error_counter)
-            if error_counter == 0:
-                #
+            products_report = validate_products(products)
+            if (error_counter == 0) and (not products_report):
                 result = {"status": "OK"}
                 return JsonResponse(result, status=200)
             error_response = {
                 "status": "ERROR",
-                "products_report": [],
+                "products_report": products_report,
                 "number_of_products_unable_to_parse": error_counter,
             }
             return JsonResponse(error_response, status=422)

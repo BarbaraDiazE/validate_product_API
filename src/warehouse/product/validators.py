@@ -4,39 +4,32 @@ Product = '{ "id":"A_120", "name":"Leche", "value": 10.00, "discount":0.10, "sto
 
 
 def validate_name(name):
-    if (type(name) == str) and (len(name) < 55):
-        print("valid name")
-    else:
-        return "invalid product name"
+    if (type(name) != str) or (len(name) > 55):
+        return "Invalid product name"
 
 
 def validate_value(value):
-    if (type(value) == float) and (0 < value < 99999.9):
-        print("valid value")
-    else:
-        return "invalid value"
+    if (type(value) != float) or not (0 < value < 99999.9):
+        return "Invalid value"
 
 
 def validate_discount_value(descount, value):
-    if (type(descount) == float) and (descount < value):
-        print("valid discount")
-    else:
+    if (type(descount) != float) or (descount > value):
         return "Invalid discount value"
 
 
 def validate_stock(stock):
-    if (type(stock) == int) and (stock > -1):
-        print("valid stock")
-    else:
+    if (type(stock) != int) or (stock < -1):
         return "Invalid stock value"
 
 
-def validate_product(object):
-    product = json.loads(object)
-    error_name = validate_name(product["name"])
-    error_value = validate_value(product["value"])
-    error_discount = validate_discount_value(product["discount"], product["value"])
-    error_stock = validate_stock(product["stock"])
+def _validate_product(product):
+    error_name = validate_name(product.get("name"))
+    error_value = validate_value(product.get("value"))
+    error_discount = validate_discount_value(
+        product.get("discount"), product.get("value")
+    )
+    error_stock = validate_stock(product.get("stock"))
     error = []
     if error_name:
         error.append(error_name)
@@ -46,7 +39,17 @@ def validate_product(object):
         error.append(error_discount)
     if error_stock:
         error.append(error_stock)
-    return error
+    return product["id"], error
+
+
+def validate_products(products):
+    products_report = []
+    for p in products:
+        id, errors = _validate_product(p)
+        if errors:
+            report = {"product_id": id, "errors": errors}
+            products_report.append(report)
+    return products_report
 
 
 # error = validate_product(Product)
